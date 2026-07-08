@@ -8,22 +8,22 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            bg: '#07080b',
-            surface: '#0e1015',
-            ember: '#f59e0b',
-            emberdeep: '#b45309',
-            flame: '#fde68a',
-            ink: '#f4f1ea',
-            muted: '#93a1b4',
+            bg: '#05070a',
+            surface: '#0a0d12',
+            ember: '#39ff14',
+            emberdeep: '#0f5c2e',
+            flame: '#b6ffb0',
+            ink: '#eef2f6',
+            muted: '#8b98ad',
           },
           fontFamily: {
-            display: ['Calistoga', 'serif'],
+            display: ['Orbitron', 'sans-serif'],
             body: ['Inter', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
           }
@@ -42,9 +42,10 @@
 
     body {
       background:
-        radial-gradient(ellipse 900px 500px at 85% -5%, rgba(245,158,11,0.14), transparent 60%),
-        radial-gradient(ellipse 700px 500px at -5% 40%, rgba(180,83,9,0.10), transparent 60%),
-        #07080b;
+        radial-gradient(ellipse 900px 500px at 85% -5%, rgba(57,255,20,0.13), transparent 60%),
+        radial-gradient(ellipse 800px 600px at -10% 55%, rgba(88,28,135,0.22), transparent 60%),
+        radial-gradient(ellipse 600px 500px at 60% 100%, rgba(30,64,175,0.14), transparent 60%),
+        #05070a;
     }
 
     .glass {
@@ -56,6 +57,33 @@
     .grain {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       mix-blend-mode: overlay;
+    }
+
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: -20;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .star-layer {
+      position: absolute;
+      top: 0; left: 0;
+      background: transparent;
+      border-radius: 50%;
+    }
+    @keyframes star-drift {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-18px, 14px); }
+    }
+
+    .gl-wordmark {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #39ff14;
+      text-shadow: 0 0 6px rgba(57,255,20,0.85), 0 0 22px rgba(57,255,20,0.5);
+      -webkit-text-stroke: 0.5px rgba(0,0,0,0.35);
     }
 
     @keyframes flicker {
@@ -89,7 +117,7 @@
       position: absolute;
       left: 0; top: 50%;
       width: 100%; height: 1px;
-      background: linear-gradient(90deg, rgba(245,158,11,0.4), transparent);
+      background: linear-gradient(90deg, rgba(57,255,20,0.4), transparent);
     }
 
     .diag {
@@ -98,6 +126,8 @@
   </style>
 </head>
 <body class="font-body text-ink antialiased selection:bg-ember selection:text-bg">
+
+  <div id="starfield" aria-hidden="true"></div>
 
   <!-- Navbar -->
   <nav class="fixed top-0 left-0 right-0 z-50 glass">
@@ -112,7 +142,7 @@
             <path d="M9 20.5h6" stroke-linecap="round"/>
           </svg>
         </span>
-        <span class="font-display text-lg tracking-wide text-ink">Lantern <span class="text-ember">Technical</span> Solutions</span>
+        <span class="gl-wordmark text-base md:text-lg uppercase">Lantern Technical Solutions</span>
       </a>
       <div class="hidden md:flex items-center gap-9 font-mono text-xs uppercase tracking-widest text-muted">
         <a href="#services" class="hover:text-ember transition-colors duration-200 cursor-pointer">Services</a>
@@ -140,7 +170,7 @@
           Lantern Technical Solutions cuts through the dark corners of IT — troubleshooting, networking, and security handled with real DoD enterprise discipline, brought to your desk.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-ember hover:bg-flame text-bg font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 cursor-pointer shadow-[0_0_40px_rgba(245,158,11,0.35)]">
+          <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-ember hover:bg-flame text-bg font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 cursor-pointer shadow-[0_0_40px_rgba(57,255,20,0.35)]">
             Request Support
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
@@ -158,24 +188,24 @@
             <line x1="110" y1="0" x2="110" y2="34" stroke="#93a1b4" stroke-width="2"/>
             <path d="M92 34h36l6 14H86l6-14z" fill="#1a1d24" stroke="#93a1b4" stroke-width="1.5"/>
             <rect x="70" y="52" width="80" height="16" rx="4" fill="#14161c" stroke="#93a1b4" stroke-width="1.5"/>
-            <path d="M78 68h64l10 176a10 10 0 01-10 10H78a10 10 0 01-10-10L78 68z" fill="#0e1015" stroke="#c99a4a" stroke-width="2"/>
+            <path d="M78 68h64l10 176a10 10 0 01-10 10H78a10 10 0 01-10-10L78 68z" fill="#0a0d12" stroke="#8b98ad" stroke-width="2"/>
             <path d="M85 74h50l8 160a6 6 0 01-6 6H83a6 6 0 01-6-6l8-160z" fill="url(#paneGlow)" opacity="0.9"/>
             <g class="animate-flicker" style="transform-origin: 110px 150px;">
               <ellipse cx="110" cy="150" rx="20" ry="46" fill="url(#flameGlow)"/>
-              <ellipse cx="110" cy="158" rx="10" ry="26" fill="#fde68a"/>
-              <ellipse cx="110" cy="164" rx="5" ry="13" fill="#fff7ed"/>
+              <ellipse cx="110" cy="158" rx="10" ry="26" fill="#39ff14"/>
+              <ellipse cx="110" cy="164" rx="5" ry="13" fill="#ecfff0"/>
             </g>
-            <path d="M78 68h64M84 240h52" stroke="#c99a4a" stroke-width="1.5"/>
-            <rect x="66" y="250" width="88" height="14" rx="4" fill="#14161c" stroke="#93a1b4" stroke-width="1.5"/>
-            <path d="M92 264h36l-6 12H98l-6-12z" fill="#1a1d24" stroke="#93a1b4" stroke-width="1.5"/>
+            <path d="M78 68h64M84 240h52" stroke="#8b98ad" stroke-width="1.5"/>
+            <rect x="66" y="250" width="88" height="14" rx="4" fill="#14161c" stroke="#8b98ad" stroke-width="1.5"/>
+            <path d="M92 264h36l-6 12H98l-6-12z" fill="#1a1d24" stroke="#8b98ad" stroke-width="1.5"/>
             <defs>
               <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#fde68a" stop-opacity="0.9"/>
-                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#b6ffb0" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#39ff14" stop-opacity="0"/>
               </radialGradient>
               <linearGradient id="paneGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35"/>
-                <stop offset="100%" stop-color="#b45309" stop-opacity="0.08"/>
+                <stop offset="0%" stop-color="#39ff14" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#0f5c2e" stop-opacity="0.08"/>
               </linearGradient>
             </defs>
           </svg>
@@ -327,15 +357,45 @@
   <!-- Footer -->
   <footer class="border-t border-white/10 py-10 px-6">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="flex items-center gap-2 font-display text-ink">
+      <div class="flex items-center gap-2">
         <svg class="w-5 h-5 text-ember" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M12 2v2.2" stroke-linecap="round"/>
           <path d="M8 6.5h8l1.3 3.2c.5 1.2.7 2.6.7 4v3.8a2 2 0 01-2 2H8a2 2 0 01-2-2v-3.8c0-1.4.2-2.8.7-4L8 6.5z"/>
         </svg>
-        Lantern Technical Solutions
+        <span class="gl-wordmark text-sm uppercase">Lantern Technical Solutions</span>
       </div>
       <p class="text-muted text-sm font-mono">&copy; 2026 All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var field = document.getElementById('starfield');
+      if (!field) return;
+      var layers = [
+        { count: 90, size: 1, opacity: 0.9, duration: '90s' },
+        { count: 55, size: 2, opacity: 0.6, duration: '140s' },
+        { count: 25, size: 2, opacity: 0.35, duration: '200s' }
+      ];
+      layers.forEach(function (layer) {
+        var shadows = [];
+        for (var i = 0; i < layer.count; i++) {
+          var x = (Math.random() * 100).toFixed(2);
+          var y = (Math.random() * 100).toFixed(2);
+          shadows.push(x + 'vw ' + y + 'vh 0 rgba(255,255,255,' + layer.opacity + ')');
+        }
+        var el = document.createElement('div');
+        el.className = 'star-layer';
+        el.style.width = layer.size + 'px';
+        el.style.height = layer.size + 'px';
+        el.style.boxShadow = shadows.join(',');
+        if (!prefersReducedMotion) {
+          el.style.animation = 'star-drift ' + layer.duration + ' ease-in-out infinite';
+        }
+        field.appendChild(el);
+      });
+    })();
+  </script>
 </body>
 </html>
