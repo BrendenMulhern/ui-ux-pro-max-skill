@@ -8,19 +8,19 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            bg: '#05070a',
-            surface: '#0a0d12',
-            ember: '#39ff14',
-            emberdeep: '#0f5c2e',
-            flame: '#b6ffb0',
-            ink: '#eef2f6',
-            muted: '#8b98ad',
+            bg: '#f7f9f7',
+            surface: '#ffffff',
+            ink: '#12201a',
+            muted: '#5b6a61',
+            border: '#e2e8e2',
+            accent: '#16a34a',
+            accentdeep: '#15803d',
           },
           fontFamily: {
             display: ['Inter', 'sans-serif'],
@@ -40,178 +40,98 @@
       }
     }
 
-    body {
-      background:
-        radial-gradient(ellipse 900px 500px at 85% -5%, rgba(57,255,20,0.13), transparent 60%),
-        radial-gradient(ellipse 800px 600px at -10% 55%, rgba(88,28,135,0.22), transparent 60%),
-        radial-gradient(ellipse 600px 500px at 60% 100%, rgba(30,64,175,0.14), transparent 60%),
-        #05070a;
-    }
-
-    .glass {
-      background: rgba(255,255,255,0.035);
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(12px);
-    }
-
-    .grain {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-    }
-
-    #starfield {
-      position: fixed;
-      inset: 0;
-      z-index: -20;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .star-layer {
-      position: absolute;
-      top: 0; left: 0;
-      background: transparent;
-      border-radius: 50%;
-    }
-    @keyframes star-drift {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(-18px, 14px); }
-    }
-
     .gl-wordmark {
       font-family: 'Anton', sans-serif;
       font-weight: 400;
       letter-spacing: 0.01em;
-      color: #39ff14;
-      text-shadow: 0 0 16px rgba(57,255,20,0.4);
+      color: #16a34a;
     }
 
     @keyframes flicker {
       0%, 100% { opacity: 1; transform: scale(1); }
-      45% { opacity: 0.88; transform: scale(0.97); }
+      45% { opacity: 0.9; transform: scale(0.97); }
       55% { opacity: 1; transform: scale(1.02); }
-      75% { opacity: 0.93; transform: scale(0.99); }
+      75% { opacity: 0.95; transform: scale(0.99); }
     }
-    .animate-flicker { animation: flicker 3.2s ease-in-out infinite; transform-origin: center; }
-
-    @keyframes glow-pulse {
-      0%, 100% { opacity: 0.55; transform: scale(1); }
-      50% { opacity: 0.9; transform: scale(1.12); }
-    }
-    .animate-glow { animation: glow-pulse 3.2s ease-in-out infinite; }
-
-    @keyframes float-y {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-14px); }
-    }
-    .animate-float { animation: float-y 6s ease-in-out infinite; }
-
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    .animate-marquee { animation: marquee 26s linear infinite; }
-
-    .num-line::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 50%;
-      width: 100%; height: 1px;
-      background: linear-gradient(90deg, rgba(57,255,20,0.4), transparent);
-    }
-
-    .diag {
-      clip-path: polygon(0 0, 100% 3.5%, 100% 100%, 0 96.5%);
-    }
-
-    .content-panel {
-      background: #0b0d12;
-      border-radius: 28px 28px 0 0;
-      border-top: 1px solid rgba(57,255,20,0.3);
-      box-shadow: 0 -30px 70px -35px rgba(57,255,20,0.12);
-    }
+    .animate-flicker { animation: flicker 3.4s ease-in-out infinite; transform-origin: center; }
   </style>
 </head>
-<body class="font-body text-ink antialiased selection:bg-ember selection:text-bg px-4 md:px-10 lg:px-14">
-
-  <div id="starfield" aria-hidden="true"></div>
+<body class="font-body text-ink antialiased bg-bg selection:bg-accent selection:text-white">
 
   <!-- Navbar -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3 cursor-pointer group">
-        <span class="relative flex items-center justify-center w-9 h-9">
-          <span class="absolute w-9 h-9 rounded-full bg-ember/30 blur-md animate-glow"></span>
-          <svg class="relative w-6 h-6 text-ember" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M12 2v2.2" stroke-linecap="round"/>
-            <path d="M8 6.5h8l1.3 3.2c.5 1.2.7 2.6.7 4v3.8a2 2 0 01-2 2H8a2 2 0 01-2-2v-3.8c0-1.4.2-2.8.7-4L8 6.5z"/>
-            <ellipse cx="12" cy="12.5" rx="1.6" ry="2.4" class="text-flame" fill="currentColor" stroke="none"/>
-            <path d="M9 20.5h6" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="gl-wordmark text-base md:text-lg uppercase">Lantern Network Solutions</span>
+  <nav class="sticky top-0 z-50 bg-surface/90 backdrop-blur-md border-b border-border">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 cursor-pointer">
+        <svg class="w-7 h-7 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M12 2v2.2" stroke-linecap="round"/>
+          <path d="M8 6.5h8l1.3 3.2c.5 1.2.7 2.6.7 4v3.8a2 2 0 01-2 2H8a2 2 0 01-2-2v-3.8c0-1.4.2-2.8.7-4L8 6.5z"/>
+          <ellipse cx="12" cy="12.5" rx="1.5" ry="2.2" fill="currentColor" stroke="none"/>
+          <path d="M9 20.5h6" stroke-linecap="round"/>
+        </svg>
+        <span class="gl-wordmark text-lg md:text-xl uppercase">Lantern Network Solutions</span>
       </a>
-      <div class="hidden md:flex items-center gap-9 font-mono text-xs uppercase tracking-widest text-muted">
-        <a href="#services" class="hover:text-ember transition-colors duration-200 cursor-pointer">Services</a>
-        <a href="#about" class="hover:text-ember transition-colors duration-200 cursor-pointer">About</a>
-        <a href="#contact" class="hover:text-ember transition-colors duration-200 cursor-pointer">Contact</a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-muted">
+        <a href="#services" class="hover:text-accentdeep transition-colors duration-200 cursor-pointer">Services</a>
+        <a href="#about" class="hover:text-accentdeep transition-colors duration-200 cursor-pointer">About</a>
+        <a href="#contact" class="hover:text-accentdeep transition-colors duration-200 cursor-pointer">Contact</a>
       </div>
-      <a href="#contact" class="font-mono text-xs uppercase tracking-widest bg-ember hover:bg-flame text-bg font-semibold px-5 py-2.5 rounded-full transition-colors duration-200 cursor-pointer">
+      <a href="#contact" class="bg-accent hover:bg-accentdeep text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors duration-200 cursor-pointer">
         Request Support
       </a>
     </div>
   </nav>
 
   <!-- Hero -->
-  <section class="relative pt-44 pb-28 px-6 overflow-hidden">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
+  <section class="pt-20 pb-16 px-6 border-b border-border">
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
       <div>
-        <p class="font-mono text-xs uppercase tracking-[0.25em] text-ember mb-6 flex items-center gap-3">
-          <span class="w-6 h-px bg-ember"></span> San Antonio, TX &mdash; IT Help Desk
+        <p class="text-xs font-mono uppercase tracking-[0.2em] text-accentdeep mb-5 flex items-center gap-2">
+          <span class="w-5 h-px bg-accentdeep"></span> San Antonio, TX &mdash; IT Help Desk
         </p>
-        <h1 class="font-display font-bold text-5xl md:text-6xl lg:text-[4.2rem] leading-[1.05] text-ink mb-8">
+        <h1 class="font-display font-extrabold text-4xl md:text-5xl leading-[1.1] text-ink mb-6">
           Technology support,<br>
-          <span class="text-ember">illuminated.</span>
+          <span class="text-accent">illuminated.</span>
         </h1>
-        <p class="text-muted text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
-          Lantern Network Solutions cuts through the dark corners of IT — troubleshooting, networking, and security handled with real DoD enterprise discipline, brought to your desk.
+        <p class="text-muted text-lg max-w-xl mb-8 leading-relaxed">
+          Lantern Network Solutions provides dependable computer and network support for individuals and small businesses in San Antonio — backed by real Department of Defense enterprise IT experience.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-ember hover:bg-flame text-bg font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 cursor-pointer shadow-[0_0_40px_rgba(57,255,20,0.35)]">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accentdeep text-white font-semibold px-7 py-3.5 rounded-lg transition-colors duration-200 cursor-pointer">
             Request Support
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
-          <a href="#services" class="inline-flex items-center justify-center gap-2 border border-white/15 hover:border-ember/50 text-ink font-semibold px-8 py-4 rounded-xl text-base transition-colors duration-200 cursor-pointer">
+          <a href="#services" class="inline-flex items-center justify-center gap-2 border border-border hover:border-accent/60 text-ink font-semibold px-7 py-3.5 rounded-lg transition-colors duration-200 cursor-pointer">
             See Services
           </a>
         </div>
       </div>
 
-      <!-- Lantern Illustration -->
+      <!-- Lantern Illustration (small, static) -->
       <div class="relative flex justify-center lg:justify-end">
-        <div class="relative animate-float">
-          <div class="absolute inset-0 -z-10 w-72 h-72 mx-auto rounded-full bg-ember/25 blur-[70px] animate-glow"></div>
-          <svg viewBox="0 0 220 320" class="w-56 md:w-72 h-auto relative z-10" fill="none">
-            <line x1="110" y1="0" x2="110" y2="34" stroke="#93a1b4" stroke-width="2"/>
-            <path d="M92 34h36l6 14H86l6-14z" fill="#1a1d24" stroke="#93a1b4" stroke-width="1.5"/>
-            <rect x="70" y="52" width="80" height="16" rx="4" fill="#14161c" stroke="#93a1b4" stroke-width="1.5"/>
-            <path d="M78 68h64l10 176a10 10 0 01-10 10H78a10 10 0 01-10-10L78 68z" fill="#0a0d12" stroke="#8b98ad" stroke-width="2"/>
+        <div class="relative w-48 md:w-56">
+          <div class="absolute inset-0 rounded-full bg-accent/5"></div>
+          <svg viewBox="0 0 220 320" class="w-full h-auto relative" fill="none">
+            <line x1="110" y1="0" x2="110" y2="34" stroke="#5b6a61" stroke-width="2"/>
+            <path d="M92 34h36l6 14H86l6-14z" fill="#eef3ee" stroke="#5b6a61" stroke-width="1.5"/>
+            <rect x="70" y="52" width="80" height="16" rx="4" fill="#f7f9f7" stroke="#5b6a61" stroke-width="1.5"/>
+            <path d="M78 68h64l10 176a10 10 0 01-10 10H78a10 10 0 01-10-10L78 68z" fill="#ffffff" stroke="#8fa398" stroke-width="2"/>
             <path d="M85 74h50l8 160a6 6 0 01-6 6H83a6 6 0 01-6-6l8-160z" fill="url(#paneGlow)" opacity="0.9"/>
             <g class="animate-flicker" style="transform-origin: 110px 150px;">
-              <ellipse cx="110" cy="150" rx="20" ry="46" fill="url(#flameGlow)"/>
-              <ellipse cx="110" cy="158" rx="10" ry="26" fill="#39ff14"/>
-              <ellipse cx="110" cy="164" rx="5" ry="13" fill="#ecfff0"/>
+              <ellipse cx="110" cy="150" rx="18" ry="42" fill="url(#flameGlow)"/>
+              <ellipse cx="110" cy="158" rx="9" ry="24" fill="#16a34a"/>
+              <ellipse cx="110" cy="164" rx="4" ry="12" fill="#eafff1"/>
             </g>
-            <path d="M78 68h64M84 240h52" stroke="#8b98ad" stroke-width="1.5"/>
-            <rect x="66" y="250" width="88" height="14" rx="4" fill="#14161c" stroke="#8b98ad" stroke-width="1.5"/>
-            <path d="M92 264h36l-6 12H98l-6-12z" fill="#1a1d24" stroke="#8b98ad" stroke-width="1.5"/>
+            <path d="M78 68h64M84 240h52" stroke="#8fa398" stroke-width="1.5"/>
+            <rect x="66" y="250" width="88" height="14" rx="4" fill="#f7f9f7" stroke="#8fa398" stroke-width="1.5"/>
+            <path d="M92 264h36l-6 12H98l-6-12z" fill="#eef3ee" stroke="#8fa398" stroke-width="1.5"/>
             <defs>
               <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#b6ffb0" stop-opacity="0.9"/>
-                <stop offset="100%" stop-color="#39ff14" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#86efac" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#16a34a" stop-opacity="0"/>
               </radialGradient>
               <linearGradient id="paneGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#39ff14" stop-opacity="0.35"/>
-                <stop offset="100%" stop-color="#0f5c2e" stop-opacity="0.08"/>
+                <stop offset="0%" stop-color="#16a34a" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#15803d" stop-opacity="0.04"/>
               </linearGradient>
             </defs>
           </svg>
@@ -220,125 +140,140 @@
     </div>
   </section>
 
-  <div class="content-panel">
-
-  <!-- Credentials Ticker -->
-  <section class="relative py-6 border-b border-white/10 bg-surface/60 overflow-hidden">
-    <div class="flex whitespace-nowrap animate-marquee">
-      <div class="flex items-center gap-14 pr-14 font-mono text-sm uppercase tracking-widest text-muted">
-        <span class="text-ember">&#9670;</span> CompTIA Security+ (IAT&nbsp;II)
-        <span class="text-ember">&#9670;</span> CompTIA Network+
-        <span class="text-ember">&#9670;</span> CompTIA A+
-        <span class="text-ember">&#9670;</span> Active Secret Clearance
-        <span class="text-ember">&#9670;</span> U.S. Army Veteran
-        <span class="text-ember">&#9670;</span> B.S. Information Technology
-      </div>
-      <div class="flex items-center gap-14 pr-14 font-mono text-sm uppercase tracking-widest text-muted" aria-hidden="true">
-        <span class="text-ember">&#9670;</span> CompTIA Security+ (IAT&nbsp;II)
-        <span class="text-ember">&#9670;</span> CompTIA Network+
-        <span class="text-ember">&#9670;</span> CompTIA A+
-        <span class="text-ember">&#9670;</span> Active Secret Clearance
-        <span class="text-ember">&#9670;</span> U.S. Army Veteran
-        <span class="text-ember">&#9670;</span> B.S. Information Technology
-      </div>
+  <!-- Credentials -->
+  <section class="py-8 px-6 border-b border-border bg-surface">
+    <div class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-x-8 gap-y-3">
+      <span class="inline-flex items-center gap-2 text-sm text-muted">
+        <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        CompTIA Security+ (IAT&nbsp;II)
+      </span>
+      <span class="inline-flex items-center gap-2 text-sm text-muted">
+        <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        CompTIA Network+
+      </span>
+      <span class="inline-flex items-center gap-2 text-sm text-muted">
+        <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        CompTIA A+
+      </span>
+      <span class="inline-flex items-center gap-2 text-sm text-muted">
+        <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Active Secret Clearance
+      </span>
+      <span class="inline-flex items-center gap-2 text-sm text-muted">
+        <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        U.S. Army Veteran
+      </span>
     </div>
   </section>
 
-  <!-- Services (Bento) -->
-  <section id="services" class="py-28 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-        <div>
-          <p class="font-mono text-xs uppercase tracking-[0.25em] text-ember mb-4">What We Offer</p>
-          <h2 class="font-display font-bold text-4xl md:text-5xl text-ink">IT help desk services</h2>
-        </div>
-        <p class="text-muted max-w-sm">Practical, enterprise-grade support for the tech problems that actually slow you down.</p>
+  <!-- Services -->
+  <section id="services" class="py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-xs font-mono uppercase tracking-[0.2em] text-accentdeep mb-3">What We Offer</p>
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl text-ink mb-4">IT help desk services</h2>
+        <p class="text-muted text-lg max-w-xl mx-auto">Practical, enterprise-grade support for the tech problems that actually slow you down.</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-5">
-        <!-- Featured -->
-        <div class="md:col-span-2 md:row-span-2 glass rounded-3xl p-10 flex flex-col justify-between relative overflow-hidden group hover:border-ember/30 transition-colors duration-300">
-          <div class="absolute -right-10 -top-10 w-56 h-56 rounded-full bg-ember/10 blur-3xl group-hover:bg-ember/20 transition-colors duration-500"></div>
-          <div class="relative">
-            <span class="font-mono text-xs text-ember tracking-widest">01</span>
-            <h3 class="font-display font-bold text-3xl text-ink mt-4 mb-4">Computer Troubleshooting &amp; Repair</h3>
-            <p class="text-muted text-lg leading-relaxed max-w-md">Fast, accurate diagnosis of Windows and macOS issues — from software conflicts and slow performance to full system repair. The same triage discipline used in mission-critical environments, applied to your machine.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Service 1 -->
+        <div class="bg-surface border border-border rounded-xl p-7 hover:shadow-md hover:border-accent/30 transition-all duration-200">
+          <div class="w-11 h-11 rounded-lg bg-accent/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
           </div>
-          <div class="relative mt-10 flex items-center gap-2 text-sm font-mono uppercase tracking-widest text-ember">
-            Tier 1&ndash;3 diagnostics
-          </div>
+          <h3 class="font-display font-bold text-lg text-ink mb-2">Computer Troubleshooting &amp; Repair</h3>
+          <p class="text-muted text-sm leading-relaxed">Fast, accurate diagnosis of Windows and macOS issues — from software conflicts to full system repair.</p>
         </div>
 
         <!-- Service 2 -->
-        <div class="glass rounded-3xl p-8 relative num-line hover:border-ember/30 transition-colors duration-300">
-          <span class="font-mono text-xs text-ember tracking-widest">02</span>
-          <h3 class="font-display font-bold text-xl text-ink mt-4 mb-3">Hardware Upgrades</h3>
-          <p class="text-muted leading-relaxed text-sm">RAM, SSD, and GPU upgrades to breathe new life into aging machines.</p>
+        <div class="bg-surface border border-border rounded-xl p-7 hover:shadow-md hover:border-accent/30 transition-all duration-200">
+          <div class="w-11 h-11 rounded-lg bg-accent/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-ink mb-2">Hardware Upgrades</h3>
+          <p class="text-muted text-sm leading-relaxed">RAM, SSD, and GPU upgrades to breathe new life into aging machines.</p>
         </div>
 
         <!-- Service 3 -->
-        <div class="glass rounded-3xl p-8 relative num-line hover:border-ember/30 transition-colors duration-300">
-          <span class="font-mono text-xs text-ember tracking-widest">03</span>
-          <h3 class="font-display font-bold text-xl text-ink mt-4 mb-3">Network Setup</h3>
-          <p class="text-muted leading-relaxed text-sm">Wired and wireless configuration, connectivity fixes, and performance tuning.</p>
+        <div class="bg-surface border border-border rounded-xl p-7 hover:shadow-md hover:border-accent/30 transition-all duration-200">
+          <div class="w-11 h-11 rounded-lg bg-accent/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12 20.25h.008v.008H12v-.008z"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-ink mb-2">Network Setup &amp; Troubleshooting</h3>
+          <p class="text-muted text-sm leading-relaxed">Wired and wireless configuration, connectivity fixes, and performance tuning.</p>
         </div>
 
         <!-- Service 4 -->
-        <div class="glass rounded-3xl p-8 relative num-line hover:border-ember/30 transition-colors duration-300">
-          <span class="font-mono text-xs text-ember tracking-widest">04</span>
-          <h3 class="font-display font-bold text-xl text-ink mt-4 mb-3">Remote &amp; On-Site Help Desk</h3>
-          <p class="text-muted leading-relaxed text-sm">Tier 1&ndash;3 support delivered wherever you need it, for everyday tech issues.</p>
+        <div class="bg-surface border border-border rounded-xl p-7 hover:shadow-md hover:border-accent/30 transition-all duration-200">
+          <div class="w-11 h-11 rounded-lg bg-accent/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-ink mb-2">Remote &amp; On-Site Help Desk</h3>
+          <p class="text-muted text-sm leading-relaxed">Tier 1&ndash;3 support delivered wherever you need it, for everyday tech issues.</p>
         </div>
 
         <!-- Service 5 -->
-        <div class="glass rounded-3xl p-8 relative num-line hover:border-ember/30 transition-colors duration-300">
-          <span class="font-mono text-xs text-ember tracking-widest">05</span>
-          <h3 class="font-display font-bold text-xl text-ink mt-4 mb-3">Security &amp; Access</h3>
-          <p class="text-muted leading-relaxed text-sm">Account setup, access management, and hardening guidance rooted in real compliance work.</p>
+        <div class="bg-surface border border-border rounded-xl p-7 hover:shadow-md hover:border-accent/30 transition-all duration-200">
+          <div class="w-11 h-11 rounded-lg bg-accent/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-ink mb-2">Security &amp; Access</h3>
+          <p class="text-muted text-sm leading-relaxed">Account setup, access management, and hardening guidance rooted in real compliance work.</p>
         </div>
 
         <!-- Service 6 -->
-        <div class="md:col-span-1 glass rounded-3xl p-8 relative num-line hover:border-ember/30 transition-colors duration-300">
-          <span class="font-mono text-xs text-ember tracking-widest">06</span>
-          <h3 class="font-display font-bold text-xl text-ink mt-4 mb-3">Peripheral Support</h3>
-          <p class="text-muted leading-relaxed text-sm">Printers, mobile devices, and connected hardware, working together.</p>
+        <div class="bg-surface border border-border rounded-xl p-7 hover:shadow-md hover:border-accent/30 transition-all duration-200">
+          <div class="w-11 h-11 rounded-lg bg-accent/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-lg text-ink mb-2">Peripheral Support</h3>
+          <p class="text-muted text-sm leading-relaxed">Printers, mobile devices, and connected hardware, working together.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- About -->
-  <section id="about" class="relative py-28 px-6 bg-surface/50 diag border-y border-white/5">
-    <div class="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-16 items-center">
-      <div class="flex justify-center lg:justify-start">
-        <div class="relative">
-          <div class="absolute inset-0 rounded-full bg-ember/20 blur-3xl animate-glow"></div>
-          <div class="relative w-48 h-48 rounded-full glass flex items-center justify-center">
-            <span class="font-display font-bold text-5xl text-ember">BM</span>
-          </div>
+  <section id="about" class="py-20 px-6 bg-surface border-y border-border">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-12 items-start">
+      <div class="flex justify-center md:justify-start">
+        <div class="w-32 h-32 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
+          <span class="font-display font-extrabold text-3xl text-accentdeep">BM</span>
         </div>
       </div>
-      <div>
-        <p class="font-mono text-xs uppercase tracking-[0.25em] text-ember mb-4">About</p>
-        <h2 class="font-display font-bold text-4xl md:text-5xl text-ink mb-8">Hi, I'm Brenden Mulhern.</h2>
-        <p class="text-muted text-lg leading-relaxed mb-5">
+      <div class="md:col-span-2">
+        <p class="text-xs font-mono uppercase tracking-[0.2em] text-accentdeep mb-3">About</p>
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl text-ink mb-6">Hi, I'm Brenden Mulhern.</h2>
+        <p class="text-muted leading-relaxed mb-4">
           I'm the founder of Lantern Network Solutions. My background is in Department of Defense enterprise IT and network services, where I provide Tier 1&ndash;3 support, manage system access, and enforce cybersecurity compliance across mission-critical environments.
         </p>
-        <p class="text-muted text-lg leading-relaxed mb-10">
+        <p class="text-muted leading-relaxed mb-8">
           Before that, I served in the U.S. Army, installing and repairing secure communications and networking infrastructure. Lantern Network Solutions brings that same enterprise-level discipline to everyday IT problems for individuals and small businesses.
         </p>
-        <div class="grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
+        <div class="grid grid-cols-3 gap-6 border-t border-border pt-6">
           <div>
-            <div class="font-display font-bold text-3xl text-ember mb-1">Tier 1&ndash;3</div>
-            <div class="text-muted text-xs font-mono uppercase tracking-widest">Support Experience</div>
+            <div class="font-display font-extrabold text-2xl text-accentdeep mb-1">Tier 1&ndash;3</div>
+            <div class="text-muted text-xs uppercase tracking-wide">Support Experience</div>
           </div>
           <div>
-            <div class="font-display font-bold text-3xl text-ember mb-1">DoD</div>
-            <div class="text-muted text-xs font-mono uppercase tracking-widest">Enterprise IT</div>
+            <div class="font-display font-extrabold text-2xl text-accentdeep mb-1">DoD</div>
+            <div class="text-muted text-xs uppercase tracking-wide">Enterprise IT</div>
           </div>
           <div>
-            <div class="font-display font-bold text-3xl text-ember mb-1">USA</div>
-            <div class="text-muted text-xs font-mono uppercase tracking-widest">Army Veteran</div>
+            <div class="font-display font-extrabold text-2xl text-accentdeep mb-1">USA</div>
+            <div class="text-muted text-xs uppercase tracking-wide">Army Veteran</div>
           </div>
         </div>
       </div>
@@ -346,66 +281,49 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="py-28 px-6">
+  <section id="contact" class="py-20 px-6">
     <div class="max-w-2xl mx-auto text-center">
-      <p class="font-mono text-xs uppercase tracking-[0.25em] text-ember mb-4">Get In Touch</p>
-      <h2 class="font-display font-bold text-4xl md:text-5xl text-ink mb-6">Let's get your tech sorted.</h2>
-      <p class="text-muted text-lg mb-12 leading-relaxed">
+      <p class="text-xs font-mono uppercase tracking-[0.2em] text-accentdeep mb-3">Get In Touch</p>
+      <h2 class="font-display font-extrabold text-3xl md:text-4xl text-ink mb-4">Let's get your tech sorted.</h2>
+      <p class="text-muted mb-10 leading-relaxed">
         Reach out to Lantern Network Solutions for help desk support, troubleshooting, or a network you can rely on.
       </p>
-      <div class="glass rounded-3xl p-12 relative overflow-hidden">
-        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full bg-ember/15 blur-3xl animate-glow"></div>
-        <span class="relative inline-flex w-3 h-3 rounded-full bg-ember mb-6 animate-glow"></span>
-        <p class="relative font-display font-bold text-2xl text-ink mb-2">Contact info coming soon</p>
-        <p class="relative text-muted">Business email to be added shortly &mdash; check back soon.</p>
+      <div class="bg-surface border border-border rounded-xl p-8 flex flex-col sm:flex-row items-center justify-center gap-8">
+        <a href="tel:+19702315710" class="flex items-center gap-3 text-ink font-semibold hover:text-accentdeep transition-colors duration-200 cursor-pointer">
+          <span class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106a1.125 1.125 0 00-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97a1.125 1.125 0 00.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+          </span>
+          <span class="text-left">
+            <span class="block text-xs text-muted font-normal uppercase tracking-wide">Call or text</span>
+            (970) 231-5710
+          </span>
+        </a>
+        <div class="hidden sm:block w-px h-10 bg-border"></div>
+        <div class="flex items-center gap-3 text-muted">
+          <span class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-accentdeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+          </span>
+          <span class="text-left">
+            <span class="block text-xs uppercase tracking-wide">Email</span>
+            Business email coming soon
+          </span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/10 py-10 px-6">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+  <footer class="border-t border-border py-10 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 text-ember" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
           <path d="M12 2v2.2" stroke-linecap="round"/>
           <path d="M8 6.5h8l1.3 3.2c.5 1.2.7 2.6.7 4v3.8a2 2 0 01-2 2H8a2 2 0 01-2-2v-3.8c0-1.4.2-2.8.7-4L8 6.5z"/>
         </svg>
         <span class="gl-wordmark text-sm uppercase">Lantern Network Solutions</span>
       </div>
-      <p class="text-muted text-sm font-mono">&copy; 2026 All rights reserved.</p>
+      <p class="text-muted text-sm">&copy; 2026 All rights reserved.</p>
     </div>
   </footer>
-
-  </div>
-
-  <script>
-    (function () {
-      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var field = document.getElementById('starfield');
-      if (!field) return;
-      var layers = [
-        { count: 90, size: 1, opacity: 0.9, duration: '90s' },
-        { count: 55, size: 2, opacity: 0.6, duration: '140s' },
-        { count: 25, size: 2, opacity: 0.35, duration: '200s' }
-      ];
-      layers.forEach(function (layer) {
-        var shadows = [];
-        for (var i = 0; i < layer.count; i++) {
-          var x = (Math.random() * 100).toFixed(2);
-          var y = (Math.random() * 100).toFixed(2);
-          shadows.push(x + 'vw ' + y + 'vh 0 rgba(255,255,255,' + layer.opacity + ')');
-        }
-        var el = document.createElement('div');
-        el.className = 'star-layer';
-        el.style.width = layer.size + 'px';
-        el.style.height = layer.size + 'px';
-        el.style.boxShadow = shadows.join(',');
-        if (!prefersReducedMotion) {
-          el.style.animation = 'star-drift ' + layer.duration + ' ease-in-out infinite';
-        }
-        field.appendChild(el);
-      });
-    })();
-  </script>
 </body>
 </html>
